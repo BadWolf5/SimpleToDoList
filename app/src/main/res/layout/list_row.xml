@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/mainText"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:text="MainText" />
+
+    <ImageView
+        android:id="@+id/dueLabel"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/mainText"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_calendar"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/dateLabel"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/mainText"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@id/dueLabel"
+        android:text="20/20/2022" />
+
+    <ImageView
+        android:id="@+id/notiIcon"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@id/dateLabel"
+        android:layout_below="@id/mainText"
+        android:src="@drawable/ic_notification"
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
+
+    <TextView
+        android:id="@+id/notiLabel"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/mainText"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@id/notiIcon"
+        android:text="20/20/34343" />
+
+    <ImageView
+        android:id="@+id/repeatImg"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/mainText"
+        android:layout_toEndOf="@id/notiLabel"
+        android:src="@drawable/ic_repeat"
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
+
+    <CheckBox
+        android:id="@+id/chkBox"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/listLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/chkBox"
+        android:layout_alignParentEnd="true"
+        android:text="List" />
+
+</RelativeLayout>

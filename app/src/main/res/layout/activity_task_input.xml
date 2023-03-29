@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    tools:context=".TaskInput">
+    
+    <TextView
+        android:id="@+id/txvAddTask"
+        android:text="@string/add_task"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/taskInputField"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/txvAddTask"
+        android:layout_toLeftOf="@id/addTaskButton"
+        android:hint="Enter your Task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/addTaskButton"
+        android:layout_below="@id/txvAddTask"
+        android:layout_alignParentRight="true"
+        android:text="Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+   <ImageButton
+       android:id="@+id/calendarButton"
+       android:layout_below="@+id/taskInputField"
+       android:src="@drawable/ic_calendar"
+       android:layout_marginLeft="10dp"
+       android:padding="5dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"/>
+
+    <ImageButton
+        android:id="@+id/reminderButton"
+        android:layout_toRightOf="@id/calendarButton"
+        android:layout_below="@id/taskInputField"
+        android:src="@drawable/ic_notification"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageButton
+        android:id="@+id/repeatButton"
+        android:layout_toRightOf="@id/reminderButton"
+        android:layout_below="@id/taskInputField"
+        android:src="@drawable/ic_repeat"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/repeatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>
