@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import io.objectbox.Box;
 import io.objectbox.query.Query;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "BadWolf";
+    private Task task;
 
 
     @Override
@@ -44,16 +46,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
 //       Make the ListView clickable
         ListView lv = findViewById(R.id.rList);
         lv.setClickable(true);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "onItemClick: The id is " + position);
-
-
+                getDataCell(position);
 
 
             }
@@ -77,12 +76,49 @@ public class MainActivity extends AppCompatActivity {
 //        Construct the data source
         ArrayList<Task> tasks = (ArrayList<Task>) query.find();
 //        Create the adapter to covert the array to views
-        MyListAdapter adapter = new MyListAdapter(this,tasks);
+        MyListAdapter adapter = new MyListAdapter(this, tasks);
 
 //        Attach the adapter to Listview
         ListView listView = findViewById(R.id.rList);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+
+    }
+
+    private void getDataCell(int position) {
+        Box<Task> taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
+
+//        Sorting it by completion. The completed ones will be at the bottom
+        Query<Task> query = taskBox.query().order(Task_.completed, 0).build();
+
+
+        // taskBox.removeAll();
+//        Construct the data source
+        ArrayList<Task> tasks = (ArrayList<Task>) query.find();
+
+
+//        Get value from StoreBox
+        Task task = taskBox.get(tasks.get(position).getId());
+        Log.i(TAG, "Actual task name: " + task.getTaskName() + " id: " + task.getId() + " completed : " + task.getCompleted());
+
+//        Change to True or false
+        if (task.getCompleted()== true) {
+            task.setCompleted(false);
+            taskBox.put(task);
+        } else {
+            task.setCompleted(true);
+            taskBox.put(task);
+        }
+
+
+        MyListAdapter adapter = new MyListAdapter(this, tasks);
+
+//        Attach the adapter to Listview
+        ListView listView = findViewById(R.id.rList);
+        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        query.close();
 
 
     }

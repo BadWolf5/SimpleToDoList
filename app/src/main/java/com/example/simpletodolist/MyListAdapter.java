@@ -40,17 +40,13 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         tvTitle.setText(task.getTaskName());
         tvList.setText(task.getList());
 
-        if(task.getCompleted()){
+        if (task.getCompleted() == false){
             cb.setChecked(false);
             notifyDataSetChanged();
-        }
-
-        if (!task.getCompleted()){
-            task.setCompleted(true);
-
-            System.out.print("name: "+task.getTaskName());
-            System.out.print("name:"+task.getCompleted());
+        } else {
+            cb.setChecked(true);
             notifyDataSetChanged();
+
         }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 //        String date = dateFormat.format(task.getDueDate());
