@@ -1,7 +1,10 @@
 package com.example.simpletodolist;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import io.objectbox.annotation.Entity;
@@ -18,14 +21,17 @@ public class Task {
     private String list;
 
 
-    private Date defaultDate() throws ParseException {
-        String defDate = "00/00/0000";
+    /*private Date defaultDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = dateFormat.parse(defDate);
-        return date;
-    }
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.YEAR, 1111);
+        return dateFormat.format(calendar.getTime());
+
+    }*/
     //region Constructors //
-    public Task() throws ParseException {
+    public Task(){
         this.taskName = "default";
         this.dueDate = null;
         this.remindMe = null;
@@ -35,10 +41,7 @@ public class Task {
 
     }
 
-    public Task(String taskName, Boolean completed) {
-        this.taskName = taskName;
-        this.completed = completed;
-    }
+
 
     public String getList() {
         return list;

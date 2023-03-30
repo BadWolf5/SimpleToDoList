@@ -7,13 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
-import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import io.objectbox.Box;
+
 public class MyListAdapter extends ArrayAdapter<Task> {
+    private String TAG = "BadWolf";
     public MyListAdapter(Context context, ArrayList<Task> tasks){
         super(context,0, tasks);
     }
@@ -31,11 +34,24 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         TextView tvDue = convertView.findViewById(R.id.dateLabel);
         TextView tvNoti = convertView.findViewById(R.id.notiLabel);
         TextView tvList = convertView.findViewById(R.id.listLabel);
+        CheckBox cb = convertView.findViewById(R.id.chkBox);
 
 //        Populate the data
         tvTitle.setText(task.getTaskName());
         tvList.setText(task.getList());
 
+        if(task.getCompleted()){
+            cb.setChecked(false);
+            notifyDataSetChanged();
+        }
+
+        if (!task.getCompleted()){
+            task.setCompleted(true);
+
+            System.out.print("name: "+task.getTaskName());
+            System.out.print("name:"+task.getCompleted());
+            notifyDataSetChanged();
+        }
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 //        String date = dateFormat.format(task.getDueDate());
 //        String notiDate = dateFormat.format(task.getRemindMe());

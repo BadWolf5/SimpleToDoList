@@ -7,14 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <view class="androidx.appcompat.app.AlertController$RecycleListView"
+    <ListView
         android:id="@+id/rList"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_above="@+id/addButton"
-        android:layout_height="match_parent">
-
-    </view>
+        android:layout_height="match_parent"/>
     <Button
         android:layout_alignParentBottom="true"
         android:id="@+id/addButton"
