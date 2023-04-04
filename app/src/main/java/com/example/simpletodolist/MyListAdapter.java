@@ -17,8 +17,9 @@ import io.objectbox.Box;
 
 public class MyListAdapter extends ArrayAdapter<Task> {
     private String TAG = "BadWolf";
-    public MyListAdapter(Context context, ArrayList<Task> tasks){
-        super(context,0, tasks);
+
+    public MyListAdapter(Context context, ArrayList<Task> tasks) {
+        super(context, 0, tasks);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class MyListAdapter extends ArrayAdapter<Task> {
 //        Get the data item for this position
         Task task = getItem(position);
 //        Check if view is being reused
-        if (convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_row, parent, false);
         }
 //        Lookup view for data population
@@ -40,7 +41,7 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         tvTitle.setText(task.getTaskName());
         tvList.setText(task.getList());
 
-        if (task.getCompleted() == false){
+        if (task.getCompleted() == false) {
             cb.setChecked(false);
             notifyDataSetChanged();
         } else {
@@ -48,12 +49,12 @@ public class MyListAdapter extends ArrayAdapter<Task> {
             notifyDataSetChanged();
 
         }
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//        String date = dateFormat.format(task.getDueDate());
-//        String notiDate = dateFormat.format(task.getRemindMe());
-//        tvDue.setText(date);
-//        tvNoti.setText(notiDate);
-
+        /*@SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String date = dateFormat.format(task.getDueDate());
+        String notiDate = dateFormat.format(task.getRemindMe());
+        tvDue.setText(date);
+        tvNoti.setText(notiDate);
+*/
         return convertView;
     }
 

@@ -26,9 +26,6 @@ public class TaskInput extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_input);
 
-
-
-
         //Declare the box
         taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
 

@@ -1,10 +1,5 @@
 package com.example.simpletodolist;
 
-import android.util.Log;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import io.objectbox.annotation.Entity;
@@ -12,7 +7,8 @@ import io.objectbox.annotation.Id;
 
 @Entity
 public class Task {
-    @Id private long id;
+    @Id
+    private long id;
     private String taskName;
     private Date dueDate;
     private Date remindMe;
@@ -31,7 +27,7 @@ public class Task {
 
     }*/
     //region Constructors //
-    public Task(){
+    public Task() {
         this.taskName = "default";
         this.dueDate = null;
         this.remindMe = null;
@@ -40,8 +36,6 @@ public class Task {
         this.list = "default";
 
     }
-
-
 
     public String getList() {
         return list;
@@ -57,7 +51,7 @@ public class Task {
         this.remindMe = remindMe;
         this.repeat = repeat;
         this.completed = completed;
-        this.list=list;
+        this.list = list;
     }
     //endregion
 

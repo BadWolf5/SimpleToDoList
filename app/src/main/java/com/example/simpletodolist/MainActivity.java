@@ -6,21 +6,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import io.objectbox.Box;
 import io.objectbox.query.Query;
 
 public class MainActivity extends AppCompatActivity {
+
     private final String TAG = "BadWolf";
     private Task task;
+
 
 
     @Override
@@ -30,12 +31,15 @@ public class MainActivity extends AppCompatActivity {
         ObjectBox.init(this);
         DisplayData();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+
+
+        /*SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         calendar.set(Calendar.MONTH, 0);
         calendar.set(Calendar.YEAR, 1111);
-        Log.i(TAG, "The Date is :" + dateFormat.format(calendar.getTime()));
+        Log.i(TAG, "The Date is :" + dateFormat.format(calendar.getTime()));*/
 
 
 //        Set the function to the Add button
@@ -53,6 +57,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getDataCell(position);
+                CheckBox checkBox = view.findViewById(R.id.chkBox);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if(isChecked){
+                            Log.i(TAG, "Checkbox is checked: ");
+
+                        } else {
+                            Log.i(TAG, "Checkbox is unchecked ");
+
+                        }
+                    }
+                });
+
 
 
             }
@@ -67,14 +85,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void DisplayData() {
+
         Box<Task> taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
 
-//        Sorting it by completion. The completed ones will be at the bottom
+//    Sorting it by completion. The completed ones will be at the bottom
         Query<Task> query = taskBox.query().order(Task_.completed, 0).build();
+
+//    Construct the data source
+        ArrayList<Task> tasks = (ArrayList<Task>) query.find();
+
 
         // taskBox.removeAll();
 //        Construct the data source
-        ArrayList<Task> tasks = (ArrayList<Task>) query.find();
 //        Create the adapter to covert the array to views
         MyListAdapter adapter = new MyListAdapter(this, tasks);
 
@@ -83,34 +105,31 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-
     }
 
     private void getDataCell(int position) {
+
         Box<Task> taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
 
-//        Sorting it by completion. The completed ones will be at the bottom
+//    Sorting it by completion. The completed ones will be at the bottom
         Query<Task> query = taskBox.query().order(Task_.completed, 0).build();
 
-
-        // taskBox.removeAll();
-//        Construct the data source
+//    Construct the data source
         ArrayList<Task> tasks = (ArrayList<Task>) query.find();
 
 
-//        Get value from StoreBox
+//        Get value from StoreBox from the cell clicked
         Task task = taskBox.get(tasks.get(position).getId());
         Log.i(TAG, "Actual task name: " + task.getTaskName() + " id: " + task.getId() + " completed : " + task.getCompleted());
 
 //        Change to True or false
-        if (task.getCompleted()== true) {
+        if (task.getCompleted() == true) {
             task.setCompleted(false);
             taskBox.put(task);
         } else {
             task.setCompleted(true);
             taskBox.put(task);
         }
-
 
         MyListAdapter adapter = new MyListAdapter(this, tasks);
 
@@ -120,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         query.close();
 
+        //BadWolf
 
     }
 
