@@ -1,6 +1,5 @@
 package com.example.simpletodolist;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import io.objectbox.Box;
 
 public class MyListAdapter extends ArrayAdapter<Task> {
     private String TAG = "BadWolf";
@@ -36,6 +33,24 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         TextView tvNoti = convertView.findViewById(R.id.notiLabel);
         TextView tvList = convertView.findViewById(R.id.listLabel);
         CheckBox cb = convertView.findViewById(R.id.chkBox);
+
+//        Add functionality to the checkbox
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()) {
+                    task.setCompleted(true);
+                    Log.i(TAG, "onCheckedChanged: true " + task.getTaskName());
+                    notifyDataSetChanged();
+                } else {
+                    buttonView.setChecked(false);
+                    task.setCompleted(false);
+                    Log.i(TAG, "onCheckedChanged: false " + task.getTaskName());
+                    notifyDataSetChanged();
+
+                }
+            }
+        });
 
 //        Populate the data
         tvTitle.setText(task.getTaskName());

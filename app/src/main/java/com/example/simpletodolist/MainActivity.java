@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private Task task;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,28 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //       Make the ListView clickable
         ListView lv = findViewById(R.id.rList);
         lv.setClickable(true);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getDataCell(position);
-                CheckBox checkBox = view.findViewById(R.id.chkBox);
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if(isChecked){
-                            Log.i(TAG, "Checkbox is checked: ");
 
-                        } else {
-                            Log.i(TAG, "Checkbox is unchecked ");
-
-                        }
-                    }
-                });
-
-
-
-            }
-        });
 
     }
 
@@ -99,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
 //        Construct the data source
 //        Create the adapter to covert the array to views
         MyListAdapter adapter = new MyListAdapter(this, tasks);
+        adapter.notifyDataSetChanged();
 
 //        Attach the adapter to Listview
         ListView listView = findViewById(R.id.rList);
         listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 
