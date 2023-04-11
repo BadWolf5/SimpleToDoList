@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,17 +20,31 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "BadWolf";
     private Task task;
 
+    private Box<Task> taskBox;
+
+    //    Sorting it by completion. The completed ones will be at the bottom
+    private Query<Task> query;
+
+    //    Construct the data source
+    private ArrayList<Task> tasks;
+
+    private MyListAdapter adapter;
+    private ListView listView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ObjectBox.init(this);
-        DisplayData();
 
-
-
-
+//        Display Data
+        taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
+        query = taskBox.query().order(Task_.completed, 0).build();
+        tasks = (ArrayList<Task>) query.find();
+        adapter = new MyListAdapter(this, tasks);
+        listView = findViewById(R.id.rList);
+        listView.setAdapter(adapter);
         /*SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -48,12 +60,16 @@ public class MainActivity extends AppCompatActivity {
             view.getContext().startActivity(intent);
         });
 
+//        Check the list
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Tap to mark the cell as Completed.
+                getDataCell(position);
+                DisplayData();
 
-//       Make the ListView clickable
-        ListView lv = findViewById(R.id.rList);
-        lv.setClickable(true);
-
-
+            }
+        });
     }
 
     @Override
@@ -64,43 +80,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void DisplayData() {
 
-        Box<Task> taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
-
-//    Sorting it by completion. The completed ones will be at the bottom
-        Query<Task> query = taskBox.query().order(Task_.completed, 0).build();
-
-//    Construct the data source
-        ArrayList<Task> tasks = (ArrayList<Task>) query.find();
-
 
         // taskBox.removeAll();
 //        Construct the data source
+        Query<Task> query = taskBox.query().order(Task_.completed, 0).build();
+        tasks.clear();
+        tasks = (ArrayList<Task>) query.find();
 //        Create the adapter to covert the array to views
         MyListAdapter adapter = new MyListAdapter(this, tasks);
-        adapter.notifyDataSetChanged();
 
 //        Attach the adapter to Listview
-        ListView listView = findViewById(R.id.rList);
+        listView = findViewById(R.id.rList);
         listView.setAdapter(adapter);
 
     }
 
     private void getDataCell(int position) {
-
-        Box<Task> taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
-
-//    Sorting it by completion. The completed ones will be at the bottom
-        Query<Task> query = taskBox.query().order(Task_.completed, 0).build();
-
-//    Construct the data source
-        ArrayList<Task> tasks = (ArrayList<Task>) query.find();
-
-
 //        Get value from StoreBox from the cell clicked
         Task task = taskBox.get(tasks.get(position).getId());
         Log.i(TAG, "Actual task name: " + task.getTaskName() + " id: " + task.getId() + " completed : " + task.getCompleted());
 
-//        Change to True or false
+//        Change to True or false on tap
         if (task.getCompleted() == true) {
             task.setCompleted(false);
             taskBox.put(task);
@@ -109,15 +109,14 @@ public class MainActivity extends AppCompatActivity {
             taskBox.put(task);
         }
 
-        MyListAdapter adapter = new MyListAdapter(this, tasks);
+        adapter = new MyListAdapter(this, tasks);
 
 //        Attach the adapter to Listview
-        ListView listView = findViewById(R.id.rList);
+        listView = findViewById(R.id.rList);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        adapter.getItem(position);
         query.close();
-
-        //BadWolf
 
     }
 

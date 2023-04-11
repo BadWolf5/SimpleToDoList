@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import io.objectbox.Box;
+
 public class MyListAdapter extends ArrayAdapter<Task> {
     private String TAG = "BadWolf";
 
@@ -23,6 +25,9 @@ public class MyListAdapter extends ArrayAdapter<Task> {
     public View getView(int position, View convertView, ViewGroup parent) {
 //        Get the data item for this position
         Task task = getItem(position);
+
+        Box<Task> taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
+        Task nTask = taskBox.get(task.getId());
 //        Check if view is being reused
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_row, parent, false);
@@ -35,22 +40,6 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         CheckBox cb = convertView.findViewById(R.id.chkBox);
 
 //        Add functionality to the checkbox
-        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (buttonView.isChecked()) {
-                    task.setCompleted(true);
-                    Log.i(TAG, "onCheckedChanged: true " + task.getTaskName());
-                    notifyDataSetChanged();
-                } else {
-                    buttonView.setChecked(false);
-                    task.setCompleted(false);
-                    Log.i(TAG, "onCheckedChanged: false " + task.getTaskName());
-                    notifyDataSetChanged();
-
-                }
-            }
-        });
 
 //        Populate the data
         tvTitle.setText(task.getTaskName());
