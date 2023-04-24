@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         TextView tvDue = convertView.findViewById(R.id.dateLabel);
         TextView tvNoti = convertView.findViewById(R.id.notiLabel);
         TextView tvList = convertView.findViewById(R.id.listLabel);
-        CheckBox cb = convertView.findViewById(R.id.chkBox);
+        ImageView iv = convertView.findViewById(R.id.chkBox);
 
 //        Add functionality to the checkbox
 
@@ -45,11 +46,11 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         tvTitle.setText(task.getTaskName());
         tvList.setText(task.getList());
 
-        if (task.getCompleted() == false) {
-            cb.setChecked(false);
+        if (!task.getCompleted()) {
+            iv.setVisibility(View.INVISIBLE);
             notifyDataSetChanged();
         } else {
-            cb.setChecked(true);
+            iv.setVisibility(View.VISIBLE);
             notifyDataSetChanged();
 
         }

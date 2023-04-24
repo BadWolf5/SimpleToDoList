@@ -3,9 +3,8 @@ package com.example.simpletodolist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import io.objectbox.query.Query;
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "BadWolf";
-    private Task task;
 
     private Box<Task> taskBox;
 
@@ -45,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MyListAdapter(this, tasks);
         listView = findViewById(R.id.rList);
         listView.setAdapter(adapter);
+
+
         /*SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -61,14 +61,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        Check the list
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        listView.setOnItemClickListener((parent, view, position, id) -> {
 //                Tap to mark the cell as Completed.
-                getDataCell(position);
-                DisplayData();
+            getDataCell(position);
+            DisplayData();
 
-            }
         });
     }
 
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Actual task name: " + task.getTaskName() + " id: " + task.getId() + " completed : " + task.getCompleted());
 
 //        Change to True or false on tap
-        if (task.getCompleted() == true) {
+        if (task.getCompleted()) {
             task.setCompleted(false);
             taskBox.put(task);
         } else {
