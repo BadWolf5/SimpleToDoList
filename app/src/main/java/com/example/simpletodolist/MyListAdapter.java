@@ -38,14 +38,39 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         TextView tvDue = convertView.findViewById(R.id.dateLabel);
         TextView tvNoti = convertView.findViewById(R.id.notiLabel);
         TextView tvList = convertView.findViewById(R.id.listLabel);
+        TextView repLabel = convertView.findViewById(R.id.repeatLabel);
         ImageView iv = convertView.findViewById(R.id.chkBox);
 
-//        Add functionality to the checkbox
+        ImageView dueImg = convertView.findViewById(R.id.dueLabel);
+        ImageView notiIcon = convertView.findViewById(R.id.notiIcon);
+        ImageView repImg = convertView.findViewById(R.id.repeatImg);
 
 //        Populate the data
         tvTitle.setText(task.getTaskName());
         tvList.setText(task.getList());
+        // Dates setup
+        if (task.getDueDate() != null){
+            tvDue.setText(task.getDueDate().toString());
+        } else {
+            tvDue.setVisibility(View.GONE);
+            dueImg.setVisibility(View.GONE);
+        }
 
+        if (task.getRemindMe() != null){
+            tvNoti.setText(task.getRemindMe().toString());
+        } else {
+            tvNoti.setVisibility(View.GONE);
+            notiIcon.setVisibility(View.GONE);
+        }
+
+        if (task.getRepeat() != null){
+            repLabel.setText(task.getRepeat());
+        } else {
+            repLabel.setVisibility(View.GONE);
+            repImg.setVisibility(View.GONE);
+        }
+
+//        Checkbox functionality
         if (!task.getCompleted()) {
             iv.setVisibility(View.INVISIBLE);
             notifyDataSetChanged();
@@ -54,12 +79,6 @@ public class MyListAdapter extends ArrayAdapter<Task> {
             notifyDataSetChanged();
 
         }
-        /*@SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String date = dateFormat.format(task.getDueDate());
-        String notiDate = dateFormat.format(task.getRemindMe());
-        tvDue.setText(date);
-        tvNoti.setText(notiDate);
-*/
         return convertView;
     }
 

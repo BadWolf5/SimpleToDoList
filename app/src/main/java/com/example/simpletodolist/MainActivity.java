@@ -44,15 +44,6 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.rList);
         listView.setAdapter(adapter);
 
-
-        /*SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.MONTH, 0);
-        calendar.set(Calendar.YEAR, 1111);
-        Log.i(TAG, "The Date is :" + dateFormat.format(calendar.getTime()));*/
-
-
 //        Set the function to the Add button
         Button addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(view -> {
@@ -67,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             DisplayData();
 
         });
+
+//        taskBox.removeAll();
     }
 
     @Override
@@ -76,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void DisplayData() {
-
-
-        // taskBox.removeAll();
 //        Construct the data source
         Query<Task> query = taskBox.query().order(Task_.completed, 0).build();
         tasks.clear();

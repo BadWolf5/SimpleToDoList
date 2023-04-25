@@ -23,18 +23,18 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
     private Box<Task> taskBox;
     private Task task;
     private Date date;
-    private String text;
+    private String taskName;
     private final String TAG = "BadWolf";
 
     //Allocate the Add Button and the rest of the things
-    Button addButton;
-    EditText taskInput;
-    ImageView calendarBtn;
-    ImageView reminderBtn;
-    ImageView repeatBtn;
-    TextView dueLabel;
-    TextView reminderLabel;
-    TextView repeatLabel;
+    private Button addButton;
+    private EditText taskInput;
+    private ImageView calendarBtn;
+    private ImageView reminderBtn;
+    private ImageView repeatBtn;
+    private TextView dueLabel;
+    private TextView reminderLabel;
+    private TextView repeatLabel;
 
 
     @Override
@@ -46,31 +46,40 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
         taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
 
         //Allocate the Add Button and the rest of the things
-        addButton = findViewById(R.id.addTaskButton);
-        taskInput = findViewById(R.id.taskInputField);
-        calendarBtn = findViewById(R.id.calendarButton);
-        reminderBtn = findViewById(R.id.reminderButton);
-        repeatBtn = findViewById(R.id.repeatButton);
+        setAddButton(findViewById(R.id.addTaskButton));
+        setTaskInput(findViewById(R.id.taskInputField));
+        setCalendarBtn(findViewById(R.id.calendarButton));
+        setReminderBtn(findViewById(R.id.reminderButton));
+        setRepeatBtn(findViewById(R.id.repeatButton));
 
-        dueLabel = findViewById(R.id.calDate);
-        reminderLabel = findViewById(R.id.reminderDate);
-        repeatLabel = findViewById(R.id.repeatDate);
+        setDueLabel(findViewById(R.id.calDate));
+        setReminderLabel(findViewById(R.id.reminderDate));
+        setRepeatLabel(findViewById(R.id.repeatDate));
 
 
 //        Configuration of the textview
-        dueLabel.setVisibility(View.GONE);
-        dueLabel.setText(null);
+        getDueLabel().setVisibility(View.GONE);
+        getDueLabel().setText(null);
 
-        reminderLabel.setVisibility(View.GONE);
-        reminderLabel.setText(null);
+        getReminderLabel().setVisibility(View.GONE);
+        getReminderLabel().setText(null);
 
-        repeatLabel.setVisibility(View.GONE);
-        repeatLabel.setText(null);
+        getRepeatLabel().setVisibility(View.GONE);
+        getRepeatLabel().setText(null);
 //        Add Button Functionality
-        addButton.setOnClickListener((View view) -> {
-            text = String.valueOf(taskInput.getText());
+        getAddButton().setOnClickListener((View view) -> {
+//            Get Values of textviews
+            taskName = String.valueOf(getTaskInput().getText());
+            Date dueDate = getDataFor(dueLabel);
+            Date remindDate = getDataFor(reminderLabel);
+            String repeatDate = String.valueOf(repeatLabel.getText());
+
+            // Initiate the object
             task = new Task();
-            task.setTaskName(text);
+            task.setTaskName(taskName);
+            task.setDueDate(dueDate);
+            task.setRemindMe(remindDate);
+            task.setRepeat(repeatDate);
             taskBox.put(task);
             finish();
 
@@ -81,20 +90,19 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         String title;
         if (v.getId() == R.id.calendarButton) {
-            dueLabel = findViewById(R.id.calDate);
+            setDueLabel(findViewById(R.id.calDate));
             title = "Set due date";
-            openDialog(dueLabel, title);
+            openDialog(getDueLabel(), title);
 
         } else if (v.getId() == R.id.reminderButton) {
             title = "Set remainder";
-            reminderLabel = findViewById(R.id.reminderDate);
-            openDialog(reminderLabel, title);
+            setReminderLabel(findViewById(R.id.reminderDate));
+            openDialog(getReminderLabel(), title);
         } else if (v.getId() == R.id.repeatButton) {
             title = " Repeat task";
-            repeatLabel = findViewById(R.id.repeatDate);
-            openDialog(repeatLabel, title);
+            setRepeatLabel(findViewById(R.id.repeatDate));
+            openDialog(getRepeatLabel(), title);
         } else if (v.getId() == R.id.addTaskButton) {
-
 
 
         }
@@ -131,10 +139,10 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
 
     }
 
-    private Date getDataFor(TextView txtView){
+    private Date getDataFor(TextView txtView) {
         Date date;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String taskName = String.valueOf(taskInput.getText());
+        String taskName = String.valueOf(getTaskInput().getText());
         if (!txtView.getText().toString().isEmpty() || !txtView.getText().equals("")) {
             try {
                 date = dateFormat.parse(txtView.getText().toString());
@@ -143,9 +151,72 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
                 throw new RuntimeException(e);
             }
 
-
         } else {
-            return date = null;
+            return null;
         }
+    }
+
+    public Button getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(Button addButton) {
+        this.addButton = addButton;
+    }
+
+    public EditText getTaskInput() {
+        return taskInput;
+    }
+
+    public void setTaskInput(EditText taskInput) {
+        this.taskInput = taskInput;
+    }
+
+    public ImageView getCalendarBtn() {
+        return calendarBtn;
+    }
+
+    public void setCalendarBtn(ImageView calendarBtn) {
+        this.calendarBtn = calendarBtn;
+    }
+
+    public ImageView getReminderBtn() {
+        return reminderBtn;
+    }
+
+    public void setReminderBtn(ImageView reminderBtn) {
+        this.reminderBtn = reminderBtn;
+    }
+
+    public ImageView getRepeatBtn() {
+        return repeatBtn;
+    }
+
+    public void setRepeatBtn(ImageView repeatBtn) {
+        this.repeatBtn = repeatBtn;
+    }
+
+    public TextView getDueLabel() {
+        return dueLabel;
+    }
+
+    public void setDueLabel(TextView dueLabel) {
+        this.dueLabel = dueLabel;
+    }
+
+    public TextView getReminderLabel() {
+        return reminderLabel;
+    }
+
+    public void setReminderLabel(TextView reminderLabel) {
+        this.reminderLabel = reminderLabel;
+    }
+
+    public TextView getRepeatLabel() {
+        return repeatLabel;
+    }
+
+    public void setRepeatLabel(TextView repeatLabel) {
+        this.repeatLabel = repeatLabel;
     }
 }

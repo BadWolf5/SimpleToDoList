@@ -16,24 +16,14 @@ public class Task {
     private Boolean completed;
     private String list;
 
-
-    /*private Date defaultDate(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.MONTH, 0);
-        calendar.set(Calendar.YEAR, 1111);
-        return dateFormat.format(calendar.getTime());
-
-    }*/
     //region Constructors //
     public Task() {
-        this.taskName = "default";
+        this.taskName = null;
         this.dueDate = null;
         this.remindMe = null;
-        this.repeat = "no";
+        this.repeat = null;
         this.completed = false;
-        this.list = "default";
+        this.list = null;
 
     }
 
