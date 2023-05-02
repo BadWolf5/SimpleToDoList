@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ObjectBox.init(this);
-
 //        Display Data
         taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
         query = taskBox.query().order(Task_.completed, 0).build();
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             DisplayData();
 
         });
-
+//        Clear the database
 //        taskBox.removeAll();
     }
 

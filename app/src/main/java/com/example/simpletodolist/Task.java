@@ -21,19 +21,12 @@ public class Task {
         this.taskName = null;
         this.dueDate = null;
         this.remindMe = null;
-        this.repeat = null;
+        this.repeat = "";
         this.completed = false;
         this.list = null;
 
     }
 
-    public String getList() {
-        return list;
-    }
-
-    public void setList(String list) {
-        this.list = list;
-    }
 
     public Task(String taskName, Date dueDate, Date remindMe, String repeat, Boolean completed, String list) {
         this.taskName = taskName;
@@ -76,6 +69,14 @@ public class Task {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getList() {
+        return list;
+    }
+
+    public void setList(String list) {
+        this.list = list;
     }
 
     public String getTaskName() {

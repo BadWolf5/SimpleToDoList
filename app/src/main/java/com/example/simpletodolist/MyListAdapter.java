@@ -1,16 +1,16 @@
 package com.example.simpletodolist;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import io.objectbox.Box;
@@ -45,25 +45,29 @@ public class MyListAdapter extends ArrayAdapter<Task> {
         ImageView notiIcon = convertView.findViewById(R.id.notiIcon);
         ImageView repImg = convertView.findViewById(R.id.repeatImg);
 
+//        Set up date format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
 //        Populate the data
         tvTitle.setText(task.getTaskName());
         tvList.setText(task.getList());
+
         // Dates setup
-        if (task.getDueDate() != null){
-            tvDue.setText(task.getDueDate().toString());
+        if (task.getDueDate() != null) {
+            tvDue.setText(dateFormat.format(task.getDueDate()));
         } else {
             tvDue.setVisibility(View.GONE);
             dueImg.setVisibility(View.GONE);
         }
 
-        if (task.getRemindMe() != null){
-            tvNoti.setText(task.getRemindMe().toString());
+        if (task.getRemindMe() != null) {
+            tvNoti.setText(dateFormat.format(task.getRemindMe()));
         } else {
             tvNoti.setVisibility(View.GONE);
             notiIcon.setVisibility(View.GONE);
         }
 
-        if (task.getRepeat() != null){
+        if (!task.getRepeat().isEmpty()){
             repLabel.setText(task.getRepeat());
         } else {
             repLabel.setVisibility(View.GONE);
