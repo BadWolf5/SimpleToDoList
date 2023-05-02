@@ -74,7 +74,7 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
             Date remindDate = getDataFor(reminderLabel);
             String repeatDate = String.valueOf(repeatLabel.getText());
 
-            // Initiate the object
+//            Set the values into the object
             task = new Task();
             task.setTaskName(taskName);
             task.setDueDate(dueDate);
@@ -142,7 +142,6 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
     private Date getDataFor(TextView txtView) {
         Date date;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String taskName = String.valueOf(getTaskInput().getText());
         if (!txtView.getText().toString().isEmpty() || !txtView.getText().equals("")) {
             try {
                 date = dateFormat.parse(txtView.getText().toString());
