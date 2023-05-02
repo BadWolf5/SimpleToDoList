@@ -4,4 +4,5 @@
     <string name="dummyDate">20/20/2022</string>
     <string name="enter_your_task">Enter your Task</string>
     <string name="add">Add</string>
+    <string name="datePattern">dd-MM-yyyy</string>
 </resources>

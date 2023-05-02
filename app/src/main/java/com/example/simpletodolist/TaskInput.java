@@ -1,8 +1,8 @@
 package com.example.simpletodolist;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,9 +23,12 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
     //    Declare the variables
     private Box<Task> taskBox;
     private Task task;
-    private Date date;
     private String taskName;
     private final String TAG = "BadWolf";
+
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.datePattern));
+
 
     //Allocate the Add Button and the rest of the things
     private Button addButton;
@@ -69,7 +72,7 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
         getRepeatLabel().setText(null);
 //        Add Button Functionality
         getAddButton().setOnClickListener((View view) -> {
-//            Get Values of textviews
+//            Get Values of textview
             taskName = String.valueOf(getTaskInput().getText());
             Date dueDate = getDataFor(dueLabel);
             Date remindDate = getDataFor(reminderLabel);
@@ -110,7 +113,7 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
             setRepeatLabel(findViewById(R.id.repeatDate));
             openDialog(getRepeatLabel(), title);
         } else if (v.getId() == R.id.addTaskButton) {
-
+// #Repair
 
         }
 
@@ -125,7 +128,6 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
         int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
 //        Set the format in which to display date (01-01-1998)
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         DatePickerDialog dateDialog = new DatePickerDialog(this, (DatePicker view, int day, int month, int year) -> {
 //            Date Picked by the user and set it to the textview
             Calendar calendar1 = Calendar.getInstance();
@@ -148,7 +150,6 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
 
     private Date getDataFor(TextView txtView) {
         Date date;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         if (!txtView.getText().toString().isEmpty() || !txtView.getText().equals("")) {
             try {
                 date = dateFormat.parse(txtView.getText().toString());
