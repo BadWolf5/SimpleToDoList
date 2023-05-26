@@ -27,7 +27,7 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
     private final String TAG = "BadWolf";
 
     @SuppressLint("SimpleDateFormat")
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.datePattern));
+    private SimpleDateFormat dateFormat;
 
 
     //Allocate the Add Button and the rest of the things
@@ -48,6 +48,8 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
 
         //Declare the box
         taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
+
+        dateFormat = new SimpleDateFormat(getString(R.string.datePattern));
 
         //Allocate the Add Button and the rest of the things
         setAddButton(findViewById(R.id.addTaskButton));
@@ -96,6 +98,7 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
         finish();
     }
 
+
     @Override
     public void onClick(View v) {
         String title;
@@ -120,6 +123,7 @@ public class TaskInput extends AppCompatActivity implements View.OnClickListener
     }
 
     private void openDialog(TextView t, String title) {
+
 
 //        Get the current date
         Calendar calendar = Calendar.getInstance();

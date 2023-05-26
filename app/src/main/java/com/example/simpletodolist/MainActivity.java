@@ -3,6 +3,8 @@ package com.example.simpletodolist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -35,12 +37,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ObjectBox.init(this);
 //        Display Data
+
         taskBox = ObjectBox.getBoxStore().boxFor(Task.class);
         query = taskBox.query().order(Task_.completed, 0).build();
         tasks = (ArrayList<Task>) query.find();
         adapter = new MyListAdapter(this, tasks);
         listView = findViewById(R.id.rList);
         listView.setAdapter(adapter);
+        DisplayData();
 
 //        Set the function to the Add button
         Button addButton = findViewById(R.id.addButton);
@@ -49,12 +53,25 @@ public class MainActivity extends AppCompatActivity {
             view.getContext().startActivity(intent);
         });
 
-//        Check the list
+//        Check the item on the list
         listView.setOnItemClickListener((parent, view, position, id) -> {
 //                Tap to mark the cell as Completed.
             getDataCell(position);
             DisplayData();
 
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Task task = taskBox.get(tasks.get(position).getId());
+                Intent intent = new Intent(MainActivity.this, EditTask.class);
+
+//                Sends data from this activity to the other.
+                intent.putExtra("currentID", task.getId());
+                Log.i(TAG, "onItemLongClick: id " + task.getId());
+                startActivity(intent);
+                return true;
+            }
         });
 //        Clear the database
 //        taskBox.removeAll();
@@ -81,9 +98,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getDataCell(int position) {
-//        Get value from StoreBox from the cell clicked
+//        Get values from StoreBox from the cell clicked
         Task task = taskBox.get(tasks.get(position).getId());
-        Log.i(TAG, "Actual task name: " + task.getTaskName() + " id: " + task.getId() + " completed : " + task.getCompleted());
 
 //        Change to True or false on tap
         if (task.getCompleted()) {

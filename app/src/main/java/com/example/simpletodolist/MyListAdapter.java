@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import io.objectbox.Box;
 
 public class MyListAdapter extends ArrayAdapter<Task> {
-    private String TAG = "BadWolf";
+    private final String TAG = "BadWolf";
 
     public MyListAdapter(Context context, ArrayList<Task> tasks) {
         super(context, 0, tasks);
