@@ -47,56 +47,66 @@
 
     <EditText
         android:id="@+id/editTask"
-        android:layout_width="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/taskLabel"
         android:layout_centerHorizontal="true"
         android:inputType="text"
-        android:minWidth="250dp"
         android:minHeight="48dp"
         android:textColorHint="#8D6E63"
         android:importantForAutofill="no" />
 
-    <TextView
-        android:id="@+id/editDateLabel"
+    <ImageButton
+        android:id="@+id/calendarButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_below="@id/editTask"
-        android:layout_alignStart="@id/editTask"
-        android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/due_date"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/editDueDate"
-        android:layout_below="@id/editDateLabel"
-        android:layout_width="wrap_content"
-        android:layout_alignStart="@id/editDateLabel"
-        android:layout_alignEnd="@id/editTask"
-        android:layout_height="wrap_content"
-        android:minHeight="30dp" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:importantForAccessibility="no"
+        android:onClick="onClick"
+        android:padding="5dp"
+        android:layout_alignStart="@id/editTask"
+        android:src="@drawable/ic_calendar" />
 
     <TextView
-        android:id="@+id/reminderLabel"
-        android:text="@string/reminder"
-        android:layout_below="@id/editDueDate"
-        android:layout_marginTop="10dp"
-        android:layout_alignStart="@id/editDueDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/editReminder"
+        android:id="@+id/dateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/reminderLabel"
-        android:layout_alignStart="@id/reminderLabel"
-        android:layout_alignEnd="@id/editDueDate"
-        android:minHeight="30dp" />
+        android:layout_alignBottom="@id/calendarButton"
+        android:layout_toEndOf="@id/calendarButton"
+
+        />
+
+    <ImageButton
+        android:id="@+id/editReminderBtn"
+        android:layout_alignBottom="@id/calendarButton"
+        android:layout_width="25dp"
+        android:layout_toEndOf="@id/dateLabel"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:importantForAccessibility="no"
+        android:onClick="onClick"
+        android:padding="5dp"
+        android:src="@drawable/ic_notification"
+        android:layout_marginEnd="5dp" />
+
+    <TextView
+        android:id="@+id/reminderDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/editReminderBtn"
+        android:layout_alignBottom="@id/editReminderBtn" />
+
 
     <LinearLayout
         android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/calendarButton"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/editReminder"
         android:layout_height="wrap_content">
 
         <Button
@@ -106,7 +116,8 @@
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:contextClickable="true"
-            android:text="Save" />
+            android:text="Save"
+            android:focusable="true" />
 
         <Button
             android:id="@+id/cancelButton"
@@ -115,7 +126,8 @@
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:contextClickable="true"
-            android:text="Cancel" />
+            android:text="Cancel"
+            android:focusable="true" />
 
 
     </LinearLayout>

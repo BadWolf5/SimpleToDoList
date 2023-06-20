@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,8 +10,8 @@
     <TextView
         android:id="@+id/txvAddTask"
         android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:text="@string/add_task" />
 
     <com.google.android.material.textfield.TextInputEditText
@@ -28,7 +27,7 @@
         android:id="@+id/addTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txvAddTask"
+        android:layout_alignBottom="@id/taskInputField"
         android:layout_alignParentEnd="true"
         android:text="@string/add" />
 
@@ -71,7 +70,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/reminderButton"
-        android:layout_marginTop="15dp"
         android:layout_toEndOf="@id/reminderButton" />
 
     <ImageButton
